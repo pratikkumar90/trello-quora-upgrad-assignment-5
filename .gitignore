@@ -1,0 +1,10 @@
+
+/**/*.jar
+
+/**/classes
+
+/**/bin
+/**/target
+*.class
+
+/**/jarRepositories.xml
