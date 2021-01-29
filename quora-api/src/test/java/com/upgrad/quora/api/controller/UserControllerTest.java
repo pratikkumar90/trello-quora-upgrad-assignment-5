@@ -1,4 +1,4 @@
-/*package com.upgrad.quora.api.controller;
+package com.upgrad.quora.api.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +18,37 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
+    String bodyForRepeatedUserNameTest = "{" +
+            "\"first_name\":\"a\"," +
+            "\"last_name\":\"a\"," +
+            "\"user_name\":\"database_username\"," +
+            "\"email_address\":\"a\"," +
+            "\"password\":\"a\"," +
+            "\"country\":\"a\"," +
+            "\"aboutMe\":\"a\"," +
+            "\"dob\":\"a\"," +
+            "\"contact_number\":\"a\"" +
+            "}";
+
+    String bodyForRepeatedEmailTest =  "{" +
+            "\"first_name\":\"a\"," +
+            "\"last_name\":\"a\"," +
+            "\"user_name\":\"non_existing_username\"," +
+            "\"email_address\":\"database_email\"," +
+            "\"password\":\"a\"," +
+            "\"country\":\"a\"," +
+            "\"aboutMe\":\"a\"," +
+            "\"dob\":\"a\"," +
+            "\"contact_number\":\"a\"" +
+            "}";
+
     @Autowired
     private MockMvc mvc;
 
     //This test case passes when you signup with a username that already exists in the database.
     @Test
     public void signupWithRepeatedUserName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/user/signup?firstName=a&lastName=a&userName=database_username&emailAddress=a&password=a&country=a&aboutMe=a&dob=a&contactNumber=a").contentType(MediaType.APPLICATION_JSON_UTF8))
+        mvc.perform(MockMvcRequestBuilders.post("/user/signup").content(bodyForRepeatedUserNameTest).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isConflict())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-001"));
     }
@@ -32,7 +56,7 @@ public class UserControllerTest {
     //This test case passes when you signup with an email that already exists in the database.
     @Test
     public void signupWithRepeatedEmail() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/user/signup?firstName=a&lastName=a&userName=non_existing_username&emailAddress=database_email&password=a&country=a&aboutMe=a&dob=a&contactNumber=a").contentType(MediaType.APPLICATION_JSON_UTF8))
+        mvc.perform(MockMvcRequestBuilders.post("/user/signup").content(bodyForRepeatedEmailTest).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isConflict())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-002"));
     }
@@ -46,4 +70,3 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-001"));
     }
 }
-*/
